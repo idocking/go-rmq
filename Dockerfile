@@ -11,8 +11,8 @@ RUN apk add --no-cache \
 	linux-headers \
 	bzip2-dev \
 	zlib-dev \
-	git && \
-	openssh-client && \
+	git \
+	openssh-client \
 	mkdir /temp && \
 	cd /temp && \
 	wget -q https://github.com/apache/rocketmq-client-cpp/archive/2.2.0.zip && \
