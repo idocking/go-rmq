@@ -1,18 +1,7 @@
-FROM golang:1.14-alpine
+FROM golang:1.14
 
-RUN apk add --no-cache \
-	gcc \
-	g++ \
-	cmake \
-	automake \
-	autoconf \
-	libtool \
-	make \
-	linux-headers \
-	bzip2-dev \
-	zlib-dev \
-	git \
-	openssh-client && \
+RUN apt update && \
+	apt install -y gcc g++ cmake automake autoconf libtool make linux-headers-4.19.0-9-all libbz2-dev zlib1g-dev git openssh-client unzip && \
 	mkdir /temp && \
 	cd /temp && \
 	wget -q https://github.com/apache/rocketmq-client-cpp/archive/2.2.0.zip && \
@@ -22,4 +11,7 @@ RUN apk add --no-cache \
 	mkdir -p /usr/local/include/rocketmq && \
 	cp include/* /usr/local/include/rocketmq && \
 	cp bin/librocketmq.* /usr/local/lib && \
-	rm -rf /temp
+	cp bin/librocketmq.* /usr/lib && \
+	rm -rf /temp && \
+	apt-get autoremove -y && \
+	rm -rf /var/lib/apt/lists/*
